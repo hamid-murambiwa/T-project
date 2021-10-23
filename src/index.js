@@ -391,6 +391,7 @@ class TDL {
 //           console.log(this.id[indexID]);
 //           localStorage.setItem('id', JSON.stringify(this.id));
 //         }
+
 //      });
 //      this.checks = [];
 // }
