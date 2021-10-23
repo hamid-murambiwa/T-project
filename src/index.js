@@ -9,20 +9,7 @@ import Icon4 from './icons8-delete-64.png';
 class TDL {
   constructor() {
     this.createTDL();
-    this.listOfItems = [
-      {         
-      task: 'water the garden',
-      completed: false,
-      index: 0,
-      id: 'rrma',
-    },
-    {         
-      task: 'clean the kitchen',
-      completed: false,
-      index: 1,
-      id: 'rrma',
-    }
-  ];
+    this.listOfItems = [];
     this.checks = [];
     this.id = [];
     if (JSON.parse(localStorage.getItem('id') !== null)) {
