@@ -5,6 +5,7 @@ import Icon from './enter.png';
 import Icon2 from './icons8-available-updates-96.png';
 import Icon3 from './options.png';
 import Icon4 from './icons8-delete-64.png';
+import checking from './index.js';
 
 class TDL {
   constructor() {
@@ -51,22 +52,22 @@ class TDL {
     resetButton.className = 'RB';
     resetButton.addEventListener('click', () => {
       resetButton.className = 'Rbutton';
-      console.log(this.id);
-      this.id.forEach((id) => {
-        if (document.getElementById(id) !== null) {
-        console.log(document.getElementById(id));
-        document.getElementById(id).parentElement.remove();
-        const index = this.listOfItems.findIndex((list) => list.id === id);
-         this.listOfItems.splice(index, 1);
-         console.log(this.listOfItems);
-         localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
-        }
-      });
-      this.id = [];
-      localStorage.setItem('id', JSON.stringify(this.id));
+      // console.log(this.id);
+      // this.id.forEach((id) => {
+      //   if (document.getElementById(id) !== null) {
+      //   console.log(document.getElementById(id));
+      //   document.getElementById(id).parentElement.remove();
+      //   const index = this.listOfItems.findIndex((list) => list.id === id);
+      //    this.listOfItems.splice(index, 1);
+      //    console.log(this.listOfItems);
+      //    localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
+      //   }
+      // });
+      // this.id = [];
+      // localStorage.setItem('id', JSON.stringify(this.id));
 
-      this.checks = [];
-      localStorage.clear();
+      // this.checks = [];
+      // localStorage.clear();
     });
     const resetIcon = document.createElement('img');
     resetIcon.src = Icon2;
@@ -83,7 +84,6 @@ class TDL {
       if (event.keyCode === 13) {
         event.preventDefault();
       if (input.value !== this.listOfItems.id) {
-        const checkBox = document.createElement('input');
         resetButton.className = 'RB';
         this.addTask();
         form.reset();
@@ -271,11 +271,17 @@ class TDL {
       checkBox.id = listOfItems.id;
       checkBox.type = 'checkbox';
       checkBox.addEventListener('change', () => {
-        if (this.checks) {
-          this.checks.push(checkBox.id);
-          console.log(checkBox.id);
+        if (checkBox.checked) {
+          // this.checks.push(checkBox.id);
+          listOfItems.completed = 'true';
+          localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
+          // console.log(checkBox.id);
+          console.log(listOfItems.completed);
+        } else {
+          listOfItems.completed = 'false';
+          localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
         }
-      }); 
+      });
       const label = document.createElement('input');
       label.className = 'tasks';
       label.value = listOfItems.task;
@@ -297,10 +303,10 @@ class TDL {
        });
        console.log(this.listOfItems);
        localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
-       this.id.splice(index, 1);
-       this.id.push(idCode);
-       localStorage.setItem('id', JSON.stringify(this.id));
-       console.log(this.id);
+      //  this.id.splice(index, 1);
+      //  this.id.push(idCode);
+      //  localStorage.setItem('id', JSON.stringify(this.id));
+      //  console.log(this.id);
       }
       });
       console.log(listOfItems);
@@ -316,17 +322,18 @@ class TDL {
         const del = document.createElement('del');
         del.innerText = listOfItems.task;
         checkBoxCon.appendChild(del);
-        const result = 0;
-        this.checks.forEach((check) => {
-              if (check == checkBox.id) {
-                result++
-              }
-        });
+      //   const result = 0;
+      //   this.checks.forEach((check) => {
+      //         if (check == checkBox.id) {
+      //           result++
+      //         }
+      //   });
 
-      } else {
-        this.checks.pop();
-        checkBoxCon.removeChild(checkBoxCon.childNodes[0]);
-        checkBoxCon.appendChild(label);
+      // } else {
+      //   this.checks.pop();
+      //   checkBoxCon.removeChild(checkBoxCon.childNodes[0]);
+      //   checkBoxCon.appendChild(label);
+      // }
       }
     });
       const optionsIcon = document.createElement('img');
@@ -343,14 +350,14 @@ class TDL {
           console.log(this.listOfItems);
           localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
   
-          const indexID = this.id.findIndex((id) => id === checkBox.id);
-          this.id.splice(indexID, 1);
-          console.log(this.id);
-          localStorage.setItem('id', JSON.stringify(this.id));
+          // const indexID = this.id.findIndex((id) => id === checkBox.id);
+          // this.id.splice(indexID, 1);
+          // console.log(this.id);
+          // localStorage.setItem('id', JSON.stringify(this.id));
   
-          const checksID = this.checks.findIndex((check) => check === checkBox.id);
-          this.checks.splice(checksID, 1);
-          console.log(this.checks);
+          // const checksID = this.checks.findIndex((check) => check === checkBox.id);
+          // this.checks.splice(checksID, 1);
+          // console.log(this.checks);
 
         });
       });
@@ -390,7 +397,7 @@ class TDL {
 
 }
 
-const tdl = new TDL();
+export const tdl = new TDL();
 console.log(tdl.listOfItems);
 // localStorage.clear();
 
