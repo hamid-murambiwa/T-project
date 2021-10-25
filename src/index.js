@@ -231,7 +231,7 @@ class TDL {
 
     this.listOfItems.push({
       task: input.task,
-      completed: checkBox.checked,
+      completed: 'false',
       index: this.listOfItems.length,
       id: checkBox.id,
     });
@@ -242,14 +242,14 @@ class TDL {
         this.checks.push(checkBox.id);
         const index = this.listOfItems.findIndex((item) => item.id === checkBox.id);
         console.log(index);
-        this.listOfItems[index].completed = 'true';
+        this.listOfItems[index].completed = true;
         localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
         console.log(this.listOfItems);
         console.log(this.listOfItems[index].completed);
         console.log('wassup');
       } else {
         const index = this.listOfItems.findIndex((item) => item.id === checkBox.id);
-        this.listOfItems[index].completed = 'false';
+        this.listOfItems[index].completed = false;
         localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
       }
     });
@@ -274,15 +274,15 @@ class TDL {
       checkBox.className = 'cBox';
       checkBox.id = listOfItems.id;
       checkBox.type = 'checkbox';
-      checkBox.addEventListener('change', () => {
+      checkBox.addEventListener('click', () => {
         if (checkBox.checked) {
           this.checks.push(checkBox.id);
-          listOfItems.completed = 'true';
+          listOfItems.completed = true;
           localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
           console.log(checkBox.id);
           console.log(listOfItems.completed);
         } else {
-          listOfItems.completed = 'false';
+          listOfItems.completed = false;
           localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
         }
       });
@@ -319,14 +319,14 @@ class TDL {
           optionsBTN.addEventListener('click', () => {
       console.log('button works');
     });
-    checkBox.addEventListener('click', () => {
+    checkBox.addEventListener('change', () => {
       if (checkBox.checked) {
         console.log(checkBox.checked);
         label.remove();
         const del = document.createElement('del');
         del.innerText = listOfItems.task;
         checkBoxCon.appendChild(del);
-        const result = 0;
+        let result = 0;
         this.checks.forEach((check) => {
               if (check == checkBox.id) {
                 result++
@@ -376,26 +376,81 @@ class TDL {
   }
 
   clearAllCompleted() {
-     console.log(this.checks);
+    console.log(this.listOfItems.length - 1);
+    let id = [];
+    
+    for (let i = 0; i < this.listOfItems.length; i++) {
+      if (this.listOfItems[i].completed=== true) {
+        id.push(this.listOfItems[i].id);
+        console.log(id[i]);
+            document.getElementById(this.listOfItems[i].id).parentElement.remove();
+           } else {
+             continue;
+           }    
+    }
 
-     this.checks.forEach((check) => {
-      console.log(this.checks);
-      console.log(this.id);
+    for(let i = 0; i < id.length; i++) {
+      const index = this.listOfItems.findIndex((obj) => obj.id === id[i]);
+      this.listOfItems.splice(index, 1);
+      localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
+
+      const indexID = this.id.findIndex((obj) => obj === id[i]);
+      this.id.splice(indexID, 1);
+      localStorage.setItem('id', JSON.stringify(this.id));
+    } 
+    id = [];
+    //  this.listOfItems.forEach((item) => {
+
+    //    if (item.completed === true) {
+    //     document.getElementById(item.id).parentElement.remove();
+    //       const index = this.listOfItems.findIndex((obj) => obj.id === item.id);
+    //       this.listOfItems.splice(index, 1);
+    //       localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
+
+    //       const indexID = this.id.findIndex((obj) => obj === item.id);
+    //       this.id.splice(indexID, 1);
+    //       localStorage.setItem('id', JSON.stringify(this.id));
+    //    }
+      
+      // const newList = this.listOfItems.filter(checkAdult);    // Returns [32, 33, 40]
+ 
+      // function checkAdult(item) {
+      //   // console.log(item['completed']);
+      // // const result = item.completed === 'true';
+      // // console.log(result);
+      // console.log(item.completed);
+      // if (item.completed == 'true') {
+      //   document.getElementById(item.id).parentElement.remove();
+      //   console.log('loop');
+      //   return item.completed !== 'false';
+        
+      // }
+      // }
+      // console.log(this.listOfItems);
+
+      // localStorage.setItem('data-list', JSON.stringify(newList));
+    //  });
+
+
+
+    //  this.checks.forEach((check) => {
+    //   console.log(this.checks);
+    //   console.log(this.id);
        
-       document.getElementById(check).parentElement.remove();
-       const index = this.listOfItems.findIndex((list) => list.id === check);
-        this.listOfItems.splice(index, 1);
-        console.log(this.listOfItems);
-        localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
+    //    document.getElementById(check).parentElement.remove();
+    //    const index = this.listOfItems.findIndex((list) => list.id === check);
+    //     this.listOfItems.splice(index, 1);
+    //     console.log(this.listOfItems);
+    //     localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
 
-        const indexID = this.id.findIndex((id) => id === check);
-        if (this.id[indexID] === check) {
-          this.id.splice(indexID, 1);
-          console.log(this.id[indexID]);
-          localStorage.setItem('id', JSON.stringify(this.id));
-        }
-     });
-     this.checks = [];
+    //     const indexID = this.id.findIndex((id) => id === check);
+    //     if (this.id[indexID] === check) {
+    //       this.id.splice(indexID, 1);
+    //       console.log(this.id[indexID]);
+    //       localStorage.setItem('id', JSON.stringify(this.id));
+    //     }
+    //  });
+    //  this.checks = [];
 }
 
 }
