@@ -4,7 +4,7 @@ import Icon from './enter.png';
 import Icon2 from './icons8-available-updates-96.png';
 import Icon3 from './options.png';
 import Icon4 from './icons8-delete-64.png';
-import delTag from './print.js';
+import delTag from './event.js';
 
 class TDL {
   constructor() {
@@ -23,7 +23,6 @@ class TDL {
       id: 'rrma',
     }
   ];
-    this.displayTask();
   }
   createTDL() {
     const wrapper = document.createElement('section');
@@ -57,7 +56,6 @@ class TDL {
         resetButton.className = 'RB';
         this.addTask();
         form.reset();
-      console.log(this.id);
       }
     }
     });
@@ -68,7 +66,6 @@ class TDL {
       resetButton.className = 'RB';
       this.addTask();
       form.reset();
-      console.log(this.id);
     });
     const enterIcon = document.createElement('img');
     enterIcon.src = Icon;
@@ -118,13 +115,9 @@ class TDL {
       checkBox.id = listOfItems.id;
       checkBox.type = 'checkbox';
       checkBox.addEventListener('change', () => {
-        console.log(this.listOfItems);
         if (checkBox.checked) {
-          // this.checks.push(checkBox.id);
           listOfItems.completed = true;
           localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
-          // console.log(checkBox.id);
-          console.log(listOfItems.completed);
         } else {
           listOfItems.completed = false;
           localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
@@ -136,32 +129,24 @@ class TDL {
       let taskInCon = listOfItems.task;
       label.addEventListener('keyup', (event) => {
         if (event.keyCode === 13) {
-          console.log(taskInCon);
           const index = this.listOfItems.findIndex((list) => list.task === taskInCon);
           this.listOfItems.splice(index, 1);
-          console.log(index);
-          console.log(this.listOfItems);
           const idCode = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
           checkBox.id = idCode;
-          console.log(idCode);
           const labelValue = label.value;
        this.listOfItems.unshift({
         task: labelValue,
         id: idCode,
        });
-       console.log(this.listOfItems);
        localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
       }
       });
-      console.log(listOfItems);
       const optionsBTN = document.createElement('button');
       optionsBTN.className = 'optionsBTN';
           optionsBTN.addEventListener('click', () => {
-      console.log('button works');
     });
     checkBox.addEventListener('click', () => {
       if (checkBox.checked) {
-        console.log(checkBox.checked);
         label.remove();
         const del = delTag();
         del.innerText = listOfItems.task;
@@ -179,7 +164,6 @@ class TDL {
           conBTN.parentElement.remove();
           const index = this.listOfItems.findIndex((list) => list.id === checkBox.id);
           this.listOfItems.splice(index, 1);
-          console.log(this.listOfItems);
           localStorage.setItem('data-list', JSON.stringify(this.listOfItems));
 
         });
@@ -197,6 +181,5 @@ class TDL {
 
 }
 
-export const tdl = new TDL();
-console.log(tdl.listOfItems);
-// localStorage.clear();
+const tdl = new TDL();
+tdl.displayTask();
